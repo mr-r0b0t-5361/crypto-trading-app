@@ -8,6 +8,7 @@ import { FlatList, Text, StyleSheet, View, TouchableOpacity } from 'react-native
 import { light_grey, fontTitleColor } from '../../constants/colors';
 import getUniqueElementsArray from '../../utils/getUniqueElementsArray';
 import getBaseArray from '../../utils/objectToArray';
+import { Actions } from 'react-native-router-flux';
 
 class CurrencyList extends Component {
 	constructor(props) {
@@ -33,7 +34,7 @@ class CurrencyList extends Component {
 			<View key={name} style={styles.itemContainer}>
 				<Text style={styles.title}>{name}</Text>
 				<View style={styles.tradeButton}>
-					<TouchableOpacity onPress={()=>{}}>
+					<TouchableOpacity onPress={() => Actions.push('currencyTrade')}>
 						<Text style={styles.text}>{'TRADE'}</Text>
 					</TouchableOpacity>
 				</View>
