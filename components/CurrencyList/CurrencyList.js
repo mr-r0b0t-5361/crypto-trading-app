@@ -5,17 +5,19 @@ import { bindActionCreators } from 'redux';
 import { configAction } from '../../stores/config/configAction';
 import { getCurrencyPairs } from '../../network/network-currency';
 import { FlatList, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { light_grey, fontTitleColor } from '../../constants/colors';
+import { light_grey, fontTitleColor, fontPrimaryColor, grey_700 } from '../../constants/colors';
 import getUniqueElementsArray from '../../utils/getUniqueElementsArray';
-import getBaseArray from '../../utils/objectToArray';
 import { Actions } from 'react-native-router-flux';
+import getBaseAndQuoteArray from '../../utils/getBaseAndQuoteArray';
+import getBaseArray from '../../utils/getBaseArray';
 
 class CurrencyList extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			currencyNames: []
+			currencyPairs: [],
+			baseArray: [],
 		};
 
 		this.getCurrencyPairs();
@@ -23,18 +25,33 @@ class CurrencyList extends Component {
 
 	async getCurrencyPairs() {
 		const { result } = await getCurrencyPairs();
-		const resultArray = getBaseArray(result).sort();
-		const filteredArray = getUniqueElementsArray(resultArray);
+	
+		const baseArrayNotUnique = getBaseArray(result).sort();
+		const baseArray = getUniqueElementsArray(baseArrayNotUnique);
 
-		this.setState({ currencyNames: filteredArray })
+		const currencyPairs = getBaseAndQuoteArray(result);
+
+		this.setState({ currencyPairs, baseArray })
 	}
 
-	renderItem(name) {
+	getRandomPairCurrencies(base) {
+		const { currencyPairs } = this.state;
+
+		let quotes = [];
+		for (let index = 0; index < 3; index++) {
+			const { quote } = currencyPairs.find(pair => pair.base === base && !quotes.includes(pair.quote));
+			quote && quotes.push(quote);
+		}
+
+		return quotes;
+	}
+
+	renderItem(base) {
 		return (
-			<View key={name} style={styles.itemContainer}>
-				<Text style={styles.title}>{name}</Text>
+			<View key={base} style={styles.itemContainer}>
+				<Text style={styles.title}>{base}</Text>
 				<View style={styles.tradeButton}>
-					<TouchableOpacity onPress={() => Actions.push('currencyTrade')}>
+					<TouchableOpacity onPress={() => Actions.push('currencyTrade', { quotes: this.getRandomPairCurrencies(base), selectedCurrency: base })}>
 						<Text style={styles.text}>{'TRADE'}</Text>
 					</TouchableOpacity>
 				</View>
@@ -43,12 +60,12 @@ class CurrencyList extends Component {
 	}
 
 	render() {
-		const { currencyNames } = this.state;
+		const { baseArray } = this.state;
 
 		return (
 			<View style={styles.container}>
 				<FlatList
-					data={currencyNames}
+					data={baseArray}
 					renderItem={({ item }) => this.renderItem(item)}
 					keyExtractor={item => item} />
 			</View>
@@ -65,7 +82,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: light_grey,
 		padding: 5,
-		borderRadius: 8,
+		borderRadius: 2,
 		marginBottom: 5,
 		marginTop: 5,
 	},
@@ -75,12 +92,20 @@ const styles = StyleSheet.create({
 	},
 	tradeButton: {
 		backgroundColor: '#cee1f3',
-		padding: 8,
+		padding: 12,
 		margin: 16,
 		borderRadius: 15,
+		borderWidth: 2,
+		borderColor: grey_700,
 		justifyContent: 'flex-end',
 		marginLeft: 'auto'
-	}
+	},
+	text: {
+		textAlign: 'center',
+		fontSize: 15,
+		color: fontPrimaryColor,
+		fontWeight: 'bold',
+	},
 });
 
 const mapDispatchToProps = dispatch => (

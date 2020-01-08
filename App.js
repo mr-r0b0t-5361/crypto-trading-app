@@ -18,7 +18,7 @@ class App extends Component {
         backButtonTintColor={black_grey} >
         <Stack key="root">
           <Scene key="currencyList" component={CurrencyList} title="Crypto Trader" initial />
-          <Scene key="currencyTrade" component={CurrencyTrade} title="Trade" />
+          <Scene key="currencyTrade" component={CurrencyTrade} hideNavBar />
         </Stack>
       </Router>
     );
