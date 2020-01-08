@@ -85,6 +85,8 @@ const styles = StyleSheet.create({
 		borderRadius: 2,
 		marginBottom: 5,
 		marginTop: 5,
+		borderBottomWidth: 1,
+		borderBottomColor: grey_700,
 	},
 	title: {
 		fontSize: 25,
@@ -92,9 +94,12 @@ const styles = StyleSheet.create({
 	},
 	tradeButton: {
 		backgroundColor: '#cee1f3',
-		padding: 12,
+		paddingTop: 5,
+		paddingBottom: 5,
+		paddingRight: 15,
+		paddingLeft: 15,
 		margin: 16,
-		borderRadius: 15,
+		borderRadius: 12,
 		borderWidth: 2,
 		borderColor: grey_700,
 		justifyContent: 'flex-end',
@@ -102,7 +107,7 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		textAlign: 'center',
-		fontSize: 15,
+		fontSize: 18,
 		color: fontPrimaryColor,
 		fontWeight: 'bold',
 	},

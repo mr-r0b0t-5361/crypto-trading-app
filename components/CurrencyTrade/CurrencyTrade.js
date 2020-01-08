@@ -28,7 +28,7 @@ class CurrencyTrade extends Component {
 		const backgroundColor = selectedPairCurrency === name ? dark_blue : light_blue;
 
 		return (
-			<View style={[{ backgroundColor }, styles.tradeButton]}>
+			<View style={[{ backgroundColor }, styles.button]}>
 				<TouchableOpacity onPress={() => this.setState({ selectedPairCurrency: name })}>
 					<Text style={styles.text}>{`SELL FOR ${name}`}</Text>
 				</TouchableOpacity>
@@ -45,7 +45,7 @@ class CurrencyTrade extends Component {
 				<Toolbar
 					leftElement={'arrow-back'}
 					onLeftElementPress={() => Actions.pop()}
-					centerElement={`TRADE ${selectedCurrency}`}
+					centerElement={`Trade ${selectedCurrency}`}
 					style={toolbar_style}
 				/>
 				<View style={styles.container}>
@@ -65,7 +65,7 @@ class CurrencyTrade extends Component {
 									value={amount}
 								/>
 							</View>
-							<View style={styles.submitTradeButton}>
+							<View style={[{ backgroundColor: dark_blue }, styles.button]}>
 								<TouchableOpacity onPress={() => this.setState({ isFinished: true })}>
 									<Text style={styles.text}>{'TRADE NOW!'}</Text>
 								</TouchableOpacity>
@@ -87,10 +87,13 @@ const styles = StyleSheet.create({
 		padding: 20
 	},
 	amountContainer: {
+		marginLeft: 8,
+		marginRight: 8,
 		marginTop: 50,
 		marginBottom: 20
 	},
-	tradeButton: {
+	button: {
+		height: 50,
 		padding: 8,
 		margin: 8,
 		borderRadius: 8,
@@ -102,6 +105,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 15,
 		color: fontPrimaryColor,
+		fontWeight: 'bold'
 	},
 	amountLabel: {
 		textAlign: 'center',
@@ -110,19 +114,13 @@ const styles = StyleSheet.create({
 		marginRight: 'auto'
 	},
 	amountText: {
+		backgroundColor: '#f3f3f3',
 		borderWidth: 1,
 		borderColor: '#000',
 		textAlign: 'right',
 		fontSize: 15,
 		color: fontPrimaryColor,
 		width: '100%'
-	},
-	submitTradeButton: {
-		backgroundColor: dark_blue,
-		padding: 8,
-		margin: 8,
-		borderRadius: 15,
-		justifyContent: 'center',
 	},
 	success: {
 		textAlign: 'center',
