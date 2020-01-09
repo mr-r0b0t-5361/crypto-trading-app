@@ -3,8 +3,6 @@ import { COLOR } from 'react-native-material-ui';
 export const fontTitleColor = '#1c1c1c';
 export const fontPrimaryColor = '#1c1c1c';
 
-export const backgroundColor =  COLOR.grey100;
-
 export const light_blue =  '#cee1f3';
 export const dark_blue =  '#6d9eeb';
 

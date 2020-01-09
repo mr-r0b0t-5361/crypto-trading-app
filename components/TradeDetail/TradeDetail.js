@@ -71,7 +71,7 @@ class TradeDetail extends Component {
 							</View>
 						</View>
 					)}
-					{isFinished && <Text style={styles.success}>{`Trade between ${currency} and ${selectedPairCurrency} successful!`}</Text>}
+					{isFinished && <Text style={styles.successText}>{`Trade between ${currency} and ${selectedPairCurrency} successful!`}</Text>}
 				</View>
 			</View>
 		);
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
 		color: fontPrimaryColor,
 		width: '100%'
 	},
-	success: {
+	successText: {
 		textAlign: 'center',
 		fontSize: 15,
 		color: 'green',
