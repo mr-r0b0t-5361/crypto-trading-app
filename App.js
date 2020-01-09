@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Provider, connect } from 'react-redux';
-import { createStore } from 'redux';
 
 import { Scene, Router, Stack } from 'react-native-router-flux';
 import CurrencyList from './components/CurrencyList';
 import { dark_grey, black_grey } from './constants/colors';
-import CurrencyTrade from './components/CurrencyTrade';
+import TradeDetail from './components/TradeDetail';
 
 class App extends Component {
 
@@ -18,17 +16,11 @@ class App extends Component {
         backButtonTintColor={black_grey} >
         <Stack key="root">
           <Scene key="currencyList" component={CurrencyList} title="Crypto Trader" initial />
-          <Scene key="currencyTrade" component={CurrencyTrade} hideNavBar />
+          <Scene key="tradeDetail" component={TradeDetail} hideNavBar />
         </Stack>
       </Router>
     );
   }
 }
 
-
-const mapStateToProps = (state) => {
-  const { config } = state;
-  return { config };
-};
-
-export default connect(mapStateToProps)(App);
+export default (App);

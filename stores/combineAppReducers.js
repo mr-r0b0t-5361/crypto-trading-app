@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import configReducer from "./config/ConfigReducer";
+import tradeReducer from "./trade/tradeReducer";
 
 const combineAppReducers = () => {
     return combineReducers({
-        config: configReducer,
+        trade: tradeReducer,
       });
 }
 

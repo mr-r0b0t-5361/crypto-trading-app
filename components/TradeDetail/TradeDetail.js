@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import { configAction } from '../../stores/config/configAction';
 import { FlatList, Text, StyleSheet, View, TouchableOpacity, TextInput } from 'react-native';
 import { fontPrimaryColor, dark_blue, light_blue, toolbar_style, grey_700 } from '../../constants/colors';
 import { Toolbar } from 'react-native-material-ui';
 import { Actions } from 'react-native-router-flux';
 
-class CurrencyTrade extends Component {
+class TradeDetail extends Component {
 	constructor(props) {
 		super(props);
 		const { quotes } = props;
@@ -20,6 +18,7 @@ class CurrencyTrade extends Component {
 			isFinished: false,
 		};
 
+		console.disableYellowBox = true;
 	}
 
 	renderItem(name) {
@@ -37,15 +36,15 @@ class CurrencyTrade extends Component {
 	}
 
 	render() {
-		const { selectedCurrency } = this.props;
-		const { quotes, amount, isFinished, selectedPairCurrency } = this.state;
+		const { trade: { quotes, currency } } = this.props;
+		const { amount, isFinished, selectedPairCurrency } = this.state;
 
 		return (
 			<View style={styles.root}>
 				<Toolbar
 					leftElement={'arrow-back'}
 					onLeftElementPress={() => Actions.pop()}
-					centerElement={`Trade ${selectedCurrency}`}
+					centerElement={`Trade ${currency}`}
 					style={toolbar_style}
 				/>
 				<View style={styles.container}>
@@ -72,7 +71,7 @@ class CurrencyTrade extends Component {
 							</View>
 						</View>
 					)}
-					{isFinished && <Text style={styles.success}>{`Trade between ${selectedCurrency} and ${selectedPairCurrency} successful!`}</Text>}
+					{isFinished && <Text style={styles.success}>{`Trade between ${currency} and ${selectedPairCurrency} successful!`}</Text>}
 				</View>
 			</View>
 		);
@@ -129,15 +128,9 @@ const styles = StyleSheet.create({
 	}
 });
 
-const mapDispatchToProps = dispatch => (
-	bindActionCreators({
-		configAction,
-	}, dispatch)
-);
-
 const mapStateToProps = (state) => {
-	const { config, map } = state;
-	return { config, map };
+	const { trade } = state;
+	return { trade };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrencyTrade);
+export default connect(mapStateToProps)(TradeDetail);

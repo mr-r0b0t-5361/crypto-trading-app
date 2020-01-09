@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import { configAction } from '../../stores/config/configAction';
+import { updateQuotes } from '../../stores/trade/updateQuotes';
+import { updateCurrency } from '../../stores/trade/updateCurrency';
 import { getCurrencyPairs } from '../../network/network-currency';
 import { FlatList, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { light_grey, fontTitleColor, fontPrimaryColor, grey_700 } from '../../constants/colors';
@@ -21,6 +21,9 @@ class CurrencyList extends Component {
 		};
 
 		this.getCurrencyPairs();
+
+		this.getRandomPairCurrencies = this.getRandomPairCurrencies.bind(this);
+		console.disableYellowBox = true;
 	}
 
 	async getCurrencyPairs() {
@@ -43,7 +46,10 @@ class CurrencyList extends Component {
 			quote && quotes.push(quote);
 		}
 
-		return quotes;
+		this.props.updateQuotes(quotes);
+		this.props.updateCurrency(base);
+
+		Actions.push('tradeDetail')
 	}
 
 	renderItem(base) {
@@ -51,7 +57,7 @@ class CurrencyList extends Component {
 			<View key={base} style={styles.itemContainer}>
 				<Text style={styles.title}>{base}</Text>
 				<View style={styles.tradeButton}>
-					<TouchableOpacity onPress={() => Actions.push('currencyTrade', { quotes: this.getRandomPairCurrencies(base), selectedCurrency: base })}>
+					<TouchableOpacity onPress={() => this.getRandomPairCurrencies(base)}>
 						<Text style={styles.text}>{'TRADE'}</Text>
 					</TouchableOpacity>
 				</View>
@@ -115,13 +121,14 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
-		configAction,
+		updateQuotes,
+		updateCurrency,
 	}, dispatch)
 );
 
 const mapStateToProps = (state) => {
-	const { config, map } = state;
-	return { config, map };
+	const { trade } = state;
+	return { trade };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrencyList);
