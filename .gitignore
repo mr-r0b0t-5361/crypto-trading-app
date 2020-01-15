@@ -42,6 +42,5 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 android/gradlew.bat
-android/gradlew
 android/gradle.properties
 ios/DedetizeJa/Images.xcassets/Contents.json
