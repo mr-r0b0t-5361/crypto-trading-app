@@ -13,6 +13,10 @@ yarn
 ## Running
 
 ```bash
+react-native start
+```
+Then:
+```bash
 react-native run-android
 ```
 or
